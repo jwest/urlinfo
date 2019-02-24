@@ -12,7 +12,6 @@ use std::fs::File;
 use std::io::Read;
 
 use classifier::NaiveBayes;
-
 use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -32,8 +31,8 @@ impl TraningUrl {
   }
 }
 
-fn read_training_examples() -> Result<Vec<TraningUrl>> {
-    let mut file = File::open("traning-dataset.json").expect("file not found");
+fn read_training_examples(training_path: String) -> Result<Vec<TraningUrl>> {
+    let mut file = File::open(training_path).expect("file not found");
     let mut contents = String::new();
     file.read_to_string(&mut contents).expect("read error");
 
@@ -49,11 +48,11 @@ fn tokenize(input: String) -> String {
     return fields.join(" ");
 }
 
-fn train() -> Box<Fn(String) -> String> {
+fn train(training_path: String) -> Box<Fn(String) -> String> {
     let mut nb = NaiveBayes::new();
     let mut documents: HashMap<String, String> = HashMap::new();
 
-    for example in read_training_examples().unwrap() {
+    for example in read_training_examples(training_path).unwrap() {
       let tokens = example.get_tokens();
 
       if !documents.contains_key(&example.category) {
@@ -76,7 +75,7 @@ fn train() -> Box<Fn(String) -> String> {
 }
 
 fn main() {
-    let classify = train();
+    let classify = train("traning-dataset/base.json".to_owned());
 
     println!("{:#?}", classify("https://www.theguardian.com/sport/2019/feb/22/zion-williamson-injury-duke-nike-hypocrisy".to_owned()));
     println!("{:#?}", classify("https://www.nytimes.com/2019/02/21/world/asia/china-handwriting-robot.html".to_owned()));
