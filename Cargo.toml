@@ -1,0 +1,12 @@
+[package]
+name = "urlinfo"
+version = "0.1.0"
+authors = ["Jakub Westfalewski <jakub.westfalewski@allegro.pl>"]
+edition = "2018"
+
+[dependencies]
+classifier = "0.0.3"
+regex = "1"
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "*"
