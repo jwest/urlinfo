@@ -49,7 +49,7 @@ fn tokenize(input: String) -> String {
     return fields.join(" ");
 }
 
-fn train() -> NaiveBayes {
+fn train() -> Box<Fn(String) -> String> {
     let mut nb = NaiveBayes::new();
     let mut documents: HashMap<String, String> = HashMap::new();
 
@@ -72,13 +72,13 @@ fn train() -> NaiveBayes {
 
     nb.train();
 
-    return nb;
+    return Box::new(move |input_str| nb.classify(&tokenize(input_str)));
 }
 
 fn main() {
-    let nb = train();
+    let classify = train();
 
-    println!("{:#?}", nb.classify(&tokenize("https://www.theguardian.com/sport/2019/feb/22/zion-williamson-injury-duke-nike-hypocrisy".to_owned())));
-    println!("{:#?}", nb.classify(&tokenize("https://www.nytimes.com/2019/02/21/world/asia/china-handwriting-robot.html".to_owned())));
-    println!("{:#?}", nb.classify(&tokenize("https://bgr.com/2019/02/20/moon-photo-50000-photos-andrew-mccarthy/".to_owned())));
+    println!("{:#?}", classify("https://www.theguardian.com/sport/2019/feb/22/zion-williamson-injury-duke-nike-hypocrisy".to_owned()));
+    println!("{:#?}", classify("https://www.nytimes.com/2019/02/21/world/asia/china-handwriting-robot.html".to_owned()));
+    println!("{:#?}", classify("https://bgr.com/2019/02/20/moon-photo-50000-photos-andrew-mccarthy/".to_owned()));
 }
