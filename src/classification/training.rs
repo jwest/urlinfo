@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::Read;
 use std::collections::HashMap;
 
-use crate::domain::{TraningUrl};
+use crate::classification::domain::{TraningUrl};
 
 pub fn read_training_examples(training_path: String) -> Result<Vec<TraningUrl>> {
     let mut file = File::open(training_path).expect("file not found");

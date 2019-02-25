@@ -5,9 +5,6 @@ extern crate regex;
 
 use std::env;
 
-mod domain;
-mod tokenization;
-mod training;
 mod classification;
 
 use crate::classification::classifier;

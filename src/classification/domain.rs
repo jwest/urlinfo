@@ -1,6 +1,6 @@
 use serde_derive::{Deserialize, Serialize};
 
-use crate::tokenization::{tokenize};
+use crate::classification::tokenization::{tokenize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TraningUrl {

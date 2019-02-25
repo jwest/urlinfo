@@ -1,7 +1,11 @@
 use classifier::NaiveBayes;
 
-use crate::tokenization::{tokenize};
-use crate::training::{prepare_documents, read_training_examples};
+use crate::classification::tokenization::{tokenize};
+use crate::classification::training::{prepare_documents, read_training_examples};
+
+mod domain;
+mod tokenization;
+mod training;
 
 pub fn classifier(training_path: String) -> Box<Fn(String) -> String> {
     let mut nb = NaiveBayes::new();
